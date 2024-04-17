@@ -1,0 +1,40 @@
+ table {
+    @apply min-w-full divide-y divide-gray-200
+}
+
+tbody {
+    @apply bg-white divide-y divide-gray-200
+}
+
+
+table thead tr th {
+    @apply px-4 py-3.5 text-sm text-left rtl:text-right
+}
+
+table tbody tr td {
+    @apply px-4 py-4 text-sm font-normal whitespace-nowrap
+}
+
+table .parent-row {
+    @apply px-10 py-3.5 text-sm text-left bg-slate-300
+}
+
+
+table .child-row th {
+    @apply px-2 py-3.5 text-sm text-left bg-slate-100
+}
+
+table .child-row td {
+    @apply px-2
+}
+
+
+::placeholder {
+    @apply font-medium text-sm text-gray-700
+}
+
+
+th:last-child, td:last-child {
+    width: 20%
+}
+

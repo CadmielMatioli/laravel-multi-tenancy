@@ -1,0 +1,11 @@
+@import '../../node_modules/@fortawesome/fontawesome-free/css/all.css';
+@import '../css/global.css';
+@import '../css/table.css';
+@import '../css/sidebar.css';
+@import '../css/scrollbar.css';
+@import '../css/slider.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+

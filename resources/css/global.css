@@ -1,0 +1,28 @@
+/* Google Fonts Import Link */
+@import url('https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap');
+
+:root {
+    --bg-primary-color: #84cc16;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'figtree', sans-serif;
+}
+
+
+body {
+    overflow-x: hidden;
+}
+
+
+label {
+    @apply block font-medium text-sm text-gray-700 mt-5 py-1
+}
+
+
+.active-tab{
+    @apply bg-transparent border  border-b-0 border-gray-300 rounded-t-md bg-gray-50
+}
