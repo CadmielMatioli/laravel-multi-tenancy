@@ -1,0 +1,24 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                - user=userApp
+                - uid=1000
+        ports:
+            - "5000:5000"
+            - "5173:5173"
+        env_file:
+            - .env
+        volumes:
+            - .:/app
+        networks:
+            - lavapplication
+        environment:
+            - APP_ENV=${APP_ENV}
+            - APP_PORT=${APP_PORT}
+
+networks:
+    lavapplication:
+        driver: bridge

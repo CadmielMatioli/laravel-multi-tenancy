@@ -1,0 +1,9 @@
+.idea
+.env
+node_modules
+docker-compose.yml
+vendor/**
+storage/framework/cache/**
+storage/framework/sessions/**
+storage/framework/views/**
+bootstrap/cache/**
