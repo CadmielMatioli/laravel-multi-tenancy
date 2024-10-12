@@ -2,6 +2,7 @@
 .env
 node_modules
 docker-compose.yml
+compose.yml
 vendor/**
 storage/framework/cache/**
 storage/framework/sessions/**

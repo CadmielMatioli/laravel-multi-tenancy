@@ -2,13 +2,12 @@ services:
     app:
         build:
             context: .
-            dockerfile: Dockerfile
+            dockerfile: dev.Dockerfile
             args:
                 - user=userApp
-                - uid=1000
         ports:
-            - "5000:5000"
-            - "5173:5173"
+            - ${APP_PORT}:${APP_PORT}
+            - ${APP_VITE_PORT}:${APP_VITE_PORT}
         env_file:
             - .env
         volumes:
@@ -18,6 +17,7 @@ services:
         environment:
             - APP_ENV=${APP_ENV}
             - APP_PORT=${APP_PORT}
+            - APP_VITE_PORT=${APP_VITE_PORT}
 
 networks:
     lavapplication:
