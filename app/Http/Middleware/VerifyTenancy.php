@@ -8,14 +8,28 @@ use Symfony\Component\HttpFoundation\Response;
 
 class VerifyTenancy
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
+
     public function handle(Request $request, Closure $next): Response
     {
-        dd($request);
+        $user = auth()->user();
+
+        if (!$user) {
+            return redirect()->route('login')->withErrors(['error' => 'Usuário não autenticado']);
+        }
+
+        if ($user->is_admin) {
+            return $next($request);
+        }
+
+        if (!$user->company_id) {
+            auth()->logout();
+            return abort(403, 'Usuário não está associado a uma empresa válida.');
+        }
+
+        if($user->company_id){
+            session()->put('company_id', $user->company_id);
+        }
+
         return $next($request);
     }
 }

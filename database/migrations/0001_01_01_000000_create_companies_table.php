@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->uuid()->default(Str::orderedUuid());
+            $table->string('cnpj')->unique();
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
