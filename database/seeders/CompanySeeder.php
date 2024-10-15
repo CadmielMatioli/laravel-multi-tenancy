@@ -12,13 +12,15 @@ class CompanySeeder extends Seeder
      */
     public function run(): void
     {
-        Company::updateOrCreate(
+        Company::upsert([
             [
-                'cnpj' => '12345678912345'
+                'cnpj' => '12345678912345',
+                'name' => 'Teste'
             ],
             [
+                'cnpj' => '123456789123454',
                 'name' => 'Teste',
             ]
-        );
+        ], 'cnpj');
     }
 }

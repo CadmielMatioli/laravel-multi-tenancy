@@ -13,17 +13,35 @@ return new class extends Migration {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
             $table->uuid()->default(Str::orderedUuid());
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('description');
             $table->boolean('status')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });
 
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->uuid()->default(Str::orderedUuid());
+            $table->string('name')->unique();
+            $table->string('description')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('categories_permissions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->foreignId('permission_id')->constrained('permissions')->onDelete('cascade');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->uuid()->default(Str::orderedUuid());
-            $table->string('name');
+            $table->string('name')->unique();
             $table->boolean('status')->default(true);
             $table->timestamps();
             $table->softDeletes();
@@ -52,6 +70,8 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::drop('permissions');
+        Schema::drop('categories');
+        Schema::drop('categories_permissions');
         Schema::drop('roles');
         Schema::drop('role_permission');
     }

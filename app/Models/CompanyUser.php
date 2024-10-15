@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class RolePermission extends Pivot {
+class CompanyUser extends Pivot {
     use SoftDeletes;
 
-    protected $table = 'roles_permissions';
+    protected $table = 'companies_users';
 }

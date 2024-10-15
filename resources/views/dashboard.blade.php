@@ -11,6 +11,10 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
                     {{ auth()->user()->name }}
+
+                    @can('permission', 'view-dashboard')
+                        term a permissão
+                    @endcan
                 </div>
             </div>
         </div>

@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 #[ScopedBy([TenantScope::class])]
@@ -19,8 +18,7 @@ class User extends Authenticatable {
         'name',
         'email',
         'password',
-        'is_admin',
-        'company_id'
+        'is_admin'
     ];
 
     protected $hidden = [
@@ -32,8 +30,11 @@ class User extends Authenticatable {
         'email_verified_at' => 'datetime',
     ];
 
-    public function company(): BelongsTo {
-        return $this->belongsTo(Company::class);
+    public function companies(): BelongsToMany {
+        return $this->belongsToMany(Company::class, 'companies_users')
+            ->withTimestamps()
+            ->withPivot('deleted_at')
+            ->using(CompanyUser::class);
     }
 
     public function roles(): BelongsToMany {
