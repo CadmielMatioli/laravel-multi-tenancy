@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
@@ -23,16 +24,11 @@ class PermissionSeeder extends Seeder
 
         Permission::upsert($permissions, ['name'], ['description', 'updated_at']);
 
-        $roles = [
-            ['name' => 'company'],
-        ];
-        Role::upsert($roles, ['name']);
         $permissions = Permission::get();
-        $role = Role::first();
-
-        $role->permissions()->attach($permissions);
+        $company = Company::first();
+        $companyRole = Role::create(['name' => 'admin', 'company_id' => $company->id]);
+        $companyRole->permissions()->attach($permissions);
         $user = User::whereHas('companies')->first();
-        $user->roles()->attach($role);
-
+        $user->userRolesCompany($company->id)->attach($companyRole);
     }
 }

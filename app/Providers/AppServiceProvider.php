@@ -2,30 +2,34 @@
 
 namespace App\Providers;
 
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
-use App\Policies\PermissionPolicy;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        Gate::define('permission', [PermissionPolicy::class, 'hasPermission']);
+    public function register(): void {}
 
-        Gate::before(function (User $user) {
-            return $user->is_admin;
-        });
+    public function boot(): void {
+        if ($this->app->runningInConsole()) return;
+
+        $currentCompanyId = 1;
+//        $currentCompanyId = session('company_id');
+
+
+        $roles = Role::where('company_id', $currentCompanyId)->with('permissions')->get();
+
+        $permissions = $roles->flatMap(function ($role) {
+            return $role->permissions;
+        })->unique('id');
+
+        foreach ($permissions as $permission) {
+            Gate::define($permission->name, function ($user) use ($permission, $currentCompanyId) {
+                return $user->hasPermissionForCompany($permission->name, $currentCompanyId);
+            });
+        }
     }
 }

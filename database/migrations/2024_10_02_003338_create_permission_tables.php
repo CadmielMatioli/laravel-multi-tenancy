@@ -41,13 +41,14 @@ return new class extends Migration {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->uuid()->default(Str::orderedUuid());
-            $table->string('name')->unique();
+            $table->string('name');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->boolean('status')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });
 
-        Schema::create('roles_permissions', function (Blueprint $table) {
+        Schema::create('permission_role', function (Blueprint $table) {
             $table->id();
             $table->uuid()->default(Str::orderedUuid());
             $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
@@ -56,7 +57,7 @@ return new class extends Migration {
             $table->softDeletes();
         });
 
-        Schema::create('roles_users', function (Blueprint $table) {
+        Schema::create('user_role', function (Blueprint $table) {
             $table->id();
             $table->uuid()->default(Str::orderedUuid());
             $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
@@ -73,6 +74,7 @@ return new class extends Migration {
         Schema::drop('categories');
         Schema::drop('categories_permissions');
         Schema::drop('roles');
-        Schema::drop('role_permission');
+        Schema::drop('company_user_role');
+        Schema::drop('permission_role');
     }
 };

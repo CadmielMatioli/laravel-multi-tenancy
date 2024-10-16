@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class RolePermission extends Pivot {
     use SoftDeletes;
 
-    protected $table = 'roles_permissions';
+    protected $table = 'permission_role';
 }

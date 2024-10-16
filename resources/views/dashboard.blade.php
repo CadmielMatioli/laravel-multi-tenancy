@@ -10,11 +10,24 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
-                    {{ auth()->user()->name }}
+                    {{ auth()->user()->name }}<br>
+                    {{ auth()->user()->companies()->pluck('name') }}<br>
+                    {{ auth()->user()->roles()->pluck('name') }}<br>
+{{--                    {{ dd(auth()->user()->getAllPermissions()) }}--}}<br>
 
-                    @can('permission', 'view-dashboard')
-                        term a permissão
+                    @can('view-dashboard')
+                        tem a permissão view-dashboard <br>
                     @endcan
+                    @can('edit-dashboard')
+                        tem a permissão edit-dashboard <br>
+                    @endcan
+                    @can('delete-dashboard')
+                        tem a permissão delete-dashboard <br>
+                    @endcan
+                    @can('create-dashboard-item')
+                        tem a permissão create-dashboard-item <br>
+                    @endcan
+
                 </div>
             </div>
         </div>

@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CompanyUser extends Pivot {
     use SoftDeletes;
 
-    protected $table = 'companies_users';
+    protected $table = 'company_user';
 }

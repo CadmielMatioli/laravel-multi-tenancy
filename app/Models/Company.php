@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\CompanyTenantScope;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[ScopedBy([CompanyTenantScope::class])]
 class Company extends Model {
     protected $fillable = ['name'];
 
@@ -16,5 +14,9 @@ class Company extends Model {
             ->withTimestamps()
             ->withPivot('deleted_at')
             ->using(CompanyUser::class);
+    }
+
+    public function roles(): HasMany {
+        return $this->hasMany(Role::class);
     }
 }
