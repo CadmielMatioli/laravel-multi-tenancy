@@ -3,7 +3,7 @@
 if [[ $APP_ENV == "local" ]]
 then
     npm install
-    nohup npm run dev &
+    nohup npm run dev -- --port $APP_VITE_PORT &
     composer install --no-scripts
     php artisan key:generate
     php artisan config:clear

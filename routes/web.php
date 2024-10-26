@@ -9,14 +9,14 @@ Route::get('/', function (){
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-//    Route::middleware(['choose-tenancy'])->group(function () {
-//        Route::get('choose-tenancy', function () {
-//            session()->put('company_id', 1);
-//            return redirect()->to('dashboard');
-//        })->name('choose-tenancy');
+    Route::middleware(['choose-tenancy'])->group(function () {
+        Route::get('choose-tenancy', function () {
+            session()->put('company_id', 1);
+            return redirect()->to('dashboard');
+        })->name('choose-tenancy');
 
 
-//        Route::middleware(['tenancy'])->group(function () {
+        Route::middleware(['tenancy', 'load-permissions'])->group(function () {
             Route::get('/dashboard', function () {
                 return view('dashboard');
             })->name('dashboard');
@@ -25,8 +25,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
             Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-//        });
-//    });
+        });
+    });
 
 });
 
