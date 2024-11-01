@@ -13,8 +13,7 @@
                     {{ 'Nome do usuário -> '.auth()->user()->name }}<br>
                     {{ 'Nome das empresas do usuário -> '.auth()->user()->companies()->pluck('name') }}<br>
                     {{ 'Nome das roles do usuário em todas as empresas -> '.auth()->user()->roles()->pluck('name') }}<br>
-                    {{ 'Empresa atual logado -> '.session()->get('company_id') }}<br>
-{{--                    {{ dd(auth()->user()->getAllPermissions()) }}--}}<br>
+                    {{ 'Empresa atual logado -> '.session()->get('company_uuid') }}<br>
 
                     @can('view-dashboard')
                         tem a permissão view-dashboard <br>

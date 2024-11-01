@@ -16,6 +16,7 @@ class UserSeeder extends Seeder {
                 'email_verified_at' => now(),
                 'remember_token' => Str::random(10),
                 'is_admin' => true,
+                'uuid' => (string) Str::orderedUuid(),
                 'password' => bcrypt('123456')
             ],
             [
@@ -24,6 +25,7 @@ class UserSeeder extends Seeder {
                 'email_verified_at' => now(),
                 'remember_token' => Str::random(10),
                 'is_admin' => false,
+                'uuid' => (string) Str::orderedUuid(),
                 'password' => bcrypt('123456')
             ],
             [
@@ -32,6 +34,7 @@ class UserSeeder extends Seeder {
                 'email_verified_at' => now(),
                 'remember_token' => Str::random(10),
                 'is_admin' => false,
+                'uuid' => (string) Str::orderedUuid(),
                 'password' => bcrypt('123456')
             ],
             [
@@ -40,6 +43,7 @@ class UserSeeder extends Seeder {
                 'email_verified_at' => now(),
                 'remember_token' => Str::random(10),
                 'is_admin' => false,
+                'uuid' => (string) Str::orderedUuid(),
                 'password' => bcrypt('123456')
             ],
             [
@@ -48,6 +52,7 @@ class UserSeeder extends Seeder {
                 'email_verified_at' => now(),
                 'remember_token' => Str::random(10),
                 'is_admin' => false,
+                'uuid' => (string) Str::orderedUuid(),
                 'password' => bcrypt('123456')
             ]
         ], 'email');

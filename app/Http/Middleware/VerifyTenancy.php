@@ -16,10 +16,10 @@ class VerifyTenancy
             return $next($request);
         }
 
-        if ($user->companies->pluck('id')->contains(session('company_id'))) {
+        if ($user->companies->pluck('uuid')->contains(session('company_uuid'))) {
             return $next($request);
         }
 
-        return redirect()->route('choose-tenancy');
+        return redirect()->route('choose-tenancy.index');
     }
 }

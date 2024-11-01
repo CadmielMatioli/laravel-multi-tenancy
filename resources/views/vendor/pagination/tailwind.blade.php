@@ -37,9 +37,9 @@
         <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
             <form action="{{ $paginationRoute }}" method="get" class="flex items-center">
                 <p class="text-sm text-gray-700 leading-5 mx-2">Linhas por página</p>
-                <select name="per_page" onchange="this.form.submit()" class="border-none text-center px-8">
+                <select name="per_page" onchange="this.form.submit()" class="text-center text-black border border-gray-100 rounded-md shadow-sm focus:outline-none sm:text-sm">
                     <option value="{{ $defaultPerPage }}" {{ $perPage == $defaultPerPage ? 'selected' : '' }}>
-                        {{ $defaultPerPage }}</option>
+                        {{ $defaultPerPage ?? config('pagination.per_page') }}</option>
                     <option value="20" {{ $perPage == 20 ? 'selected' : '' }}>20</option>
                     <option value="30" {{ $perPage == 30 ? 'selected' : '' }}>30</option>
                     <option value="40" {{ $perPage == 40 ? 'selected' : '' }}>40</option>

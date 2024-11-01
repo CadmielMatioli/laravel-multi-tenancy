@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ChooseTenancyController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -10,15 +11,13 @@ Route::get('/', function (){
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['choose-tenancy'])->group(function () {
-        Route::get('choose-tenancy', function () {
-            session()->put('company_id', 1);
-            return redirect()->to('dashboard');
-        })->name('choose-tenancy');
+        Route::get('choose-tenancy', [ChooseTenancyController::class, 'index'])->name('choose-tenancy.index');
+        Route::post('choose-tenancy', [ChooseTenancyController::class, 'store'])->name('choose-tenancy.store');
 
 
         Route::middleware(['tenancy', 'load-permissions'])->group(function () {
             Route::get('/dashboard', function () {
-                return view('dashboard');
+                return view('pages.dashboard');
             })->name('dashboard');
 
             Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
