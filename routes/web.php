@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChooseTenancyController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/dashboard', function () {
                 return view('pages.dashboard');
             })->name('dashboard');
+
+
+            Route::get('/companies', [CompanyController::class, 'create'])->name('companies.create');
+            Route::post('/companies', [CompanyController::class, 'store'])->name('companies.store');
+            Route::get('/companies/{company}', [CompanyController::class, 'edit'])->name('companies.edit');
+            Route::put('/companies/{company}', [CompanyController::class, 'update'])->name('companies.update');
+            Route::delete('/companies/{company}', [CompanyController::class, 'delete'])->name('companies.destroy');
 
             Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
             Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

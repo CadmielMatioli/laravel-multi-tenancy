@@ -16,12 +16,12 @@ class CompanySeeder extends Seeder
         Company::upsert([
             [
                 'cnpj' => '12345678912345',
-                'uuid' => (string) Str::orderedUuid(),
+                'uuid' => (string) Str::uuid(),
                 'name' => 'Teste'
             ],
             [
                 'cnpj' => '123456789123454',
-                'uuid' => (string) Str::orderedUuid(),
+                'uuid' => (string) Str::uuid(),
                 'name' => 'Teste',
             ]
         ], 'cnpj', ['name', 'uuid']);

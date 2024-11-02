@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Company;
+use Illuminate\Support\Str;
 
 class CompanyService {
 
@@ -10,5 +11,31 @@ class CompanyService {
 
     public function getByUuid($uuid = null){
         return $this->company->where('uuid', $uuid ?? request()->company_uuid)->first();
+    }
+    public function get(){
+        $companies = auth()->user()->companies();
+        if(auth()->user()->is_admin) {
+            $companies = $this->company;
+        }
+        return $companies
+            ->when(request()->filled('nome'), fn($query) => $query->where('name', 'like', '%' . request()->input('nome') . '%'))
+            ->when(request()->filled('cnpj'), fn($query) => $query->where('cnpj', 'like', '%' . request()->input('cnpj') . '%'))
+            ->paginate(config('pagination.per_page'));
+    }
+
+    public function create($request){
+        $this->company->create([
+            'name' => $request->name,
+            'uuid' => (string) Str::uuid(),
+            'cnpj' => $request->cnpj
+        ]);
+    }
+
+    public function update($request, $company){
+        $company->update([
+            'name' => $request->name,
+            'uuid' => (string) Str::uuid(),
+            'cnpj' => $request->cnpj
+        ]);
     }
 }

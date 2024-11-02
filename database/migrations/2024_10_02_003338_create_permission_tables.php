@@ -12,7 +12,7 @@ return new class extends Migration {
 
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->uuid()->default(Str::orderedUuid())->unique();
+            $table->uuid()->default(Str::uuid())->unique();
             $table->string('name')->unique();
             $table->string('description');
             $table->boolean('status')->default(true);
@@ -22,7 +22,7 @@ return new class extends Migration {
 
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->uuid()->default(Str::orderedUuid())->unique();
+            $table->uuid()->default(Str::uuid())->unique();
             $table->string('name')->unique();
             $table->string('description')->nullable();
             $table->timestamps();
@@ -40,7 +40,7 @@ return new class extends Migration {
 
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->uuid()->default(Str::orderedUuid())->unique();
+            $table->uuid()->default(Str::uuid())->unique();
             $table->string('name');
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->boolean('status')->default(true);

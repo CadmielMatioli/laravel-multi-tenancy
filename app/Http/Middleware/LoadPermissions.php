@@ -16,8 +16,8 @@ class LoadPermissions {
     public function handle(Request $request, Closure $next): Response
     {
         $currentCompanyUuid = session('company_uuid');
-        $currentCompanyId = $this->companyService->getByUuid($currentCompanyUuid)->id;
-        if($currentCompanyId){
+        if($currentCompanyUuid){
+            $currentCompanyId = $this->companyService->getByUuid($currentCompanyUuid)->id;
             $roles = Role::where('company_id', $currentCompanyId)->with('permissions')->get();
             $permissions = $roles->flatMap(function ($role) {
                 return $role->permissions;

@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Company extends Model {
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'uuid','cnpj'];
+
+    public function getRouteKeyName(): string {
+        return 'uuid';
+    }
 
     public function users(): BelongsToMany {
         return $this->belongsToMany(User::class, 'companies_users')
