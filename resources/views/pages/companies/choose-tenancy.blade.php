@@ -38,11 +38,7 @@
                                 <a href="{{ route('companies.edit', $company) }}" class="text-blue-600 hover:text-blue-900">
                                     <x-primary-button type="button">Editar</x-primary-button>
                                 </a>
-                                <form action="{{ route('companies.destroy', $company) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar esta empresa?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <x-danger-button type="submit">Deletar</x-danger-button>
-                                </form>
+                                <x-danger-button onclick="openModal('{{ route('companies.destroy', $company->uuid) }}', '{{ $company->cnpj }}')">Deletar</x-danger-button>
                             </div>
                         </td>
                     </tr>
@@ -54,4 +50,5 @@
             {{ $companies->links() }}
         </div>
     </div>
+    <x-modal title="Confirmar Deleção" message="Você tem certeza que deseja remover a empresa" actionUrl="" name="" />
 </x-app-layout>

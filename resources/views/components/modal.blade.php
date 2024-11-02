@@ -1,78 +1,60 @@
-@props([
-    'name',
-    'show' => false,
-    'maxWidth' => '2xl'
-])
-
-@php
-$maxWidth = [
-    'sm' => 'sm:max-w-sm',
-    'md' => 'sm:max-w-md',
-    'lg' => 'sm:max-w-lg',
-    'xl' => 'sm:max-w-xl',
-    '2xl' => 'sm:max-w-2xl',
-][$maxWidth];
-@endphp
-
-<div
-    x-data="{
-        show: @js($show),
-        focusables() {
-            // All focusable element types...
-            let selector = 'a, button, input:not([type=\'hidden\']), textarea, select, details, [tabindex]:not([tabindex=\'-1\'])'
-            return [...$el.querySelectorAll(selector)]
-                // All non-disabled elements...
-                .filter(el => ! el.hasAttribute('disabled'))
-        },
-        firstFocusable() { return this.focusables()[0] },
-        lastFocusable() { return this.focusables().slice(-1)[0] },
-        nextFocusable() { return this.focusables()[this.nextFocusableIndex()] || this.firstFocusable() },
-        prevFocusable() { return this.focusables()[this.prevFocusableIndex()] || this.lastFocusable() },
-        nextFocusableIndex() { return (this.focusables().indexOf(document.activeElement) + 1) % (this.focusables().length + 1) },
-        prevFocusableIndex() { return Math.max(0, this.focusables().indexOf(document.activeElement)) -1 },
-    }"
-    x-init="$watch('show', value => {
-        if (value) {
-            document.body.classList.add('overflow-y-hidden');
-            {{ $attributes->has('focusable') ? 'setTimeout(() => firstFocusable().focus(), 100)' : '' }}
-        } else {
-            document.body.classList.remove('overflow-y-hidden');
-        }
-    })"
-    x-on:open-modal.window="$event.detail == '{{ $name }}' ? show = true : null"
-    x-on:close-modal.window="$event.detail == '{{ $name }}' ? show = false : null"
-    x-on:close.stop="show = false"
-    x-on:keydown.escape.window="show = false"
-    x-on:keydown.tab.prevent="$event.shiftKey || nextFocusable().focus()"
-    x-on:keydown.shift.tab.prevent="prevFocusable().focus()"
-    x-show="show"
-    class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50"
-    style="display: {{ $show ? 'block' : 'none' }};"
->
-    <div
-        x-show="show"
-        class="fixed inset-0 transform transition-all"
-        x-on:click="show = false"
-        x-transition:enter="ease-out duration-300"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="ease-in duration-200"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-    >
-        <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
-    </div>
-
-    <div
-        x-show="show"
-        class="mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full {{ $maxWidth }} sm:mx-auto"
-        x-transition:enter="ease-out duration-300"
-        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-        x-transition:leave="ease-in duration-200"
-        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-    >
-        {{ $slot }}
+<div id="modal" class="fixed inset-0 z-50 hidden bg-gray-800 bg-opacity-50 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen">
+        <div id="modalContent" class="bg-white rounded-lg p-5 w-96 transform scale-95 opacity-0 transition-all duration-150 ease-in-out">
+            <h2 class="text-lg font-bold mb-4">{{ $title }}</h2>
+            <p id="modalMessage">{{ $message }} <strong>{{ $name }}</strong></p>
+            <div class="flex justify-end mt-4">
+                <button class="px-4 py-2 text-gray-500" onclick="closeModal()">Cancelar</button>
+                <form id="deleteForm" action="{{ $actionUrl }}" method="POST" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="px-4 py-2 text-red-600 hover:text-red-900">Deletar</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
+
+
+<script>
+    function openModal(actionUrl, companyName) {
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modalContent');
+        document.getElementById('deleteForm').action = actionUrl;
+        modalContent.querySelector('#modalMessage').innerHTML = `{{$message}} <strong>${companyName}</strong>?`;
+        modalContent.classList.remove('scale-100', 'opacity-100');
+        modalContent.classList.add('scale-95', 'opacity-0');
+        modal.classList.remove('hidden');
+        void modalContent.offsetWidth;
+        modalContent.classList.remove('scale-95', 'opacity-0');
+        modalContent.classList.add('scale-100', 'opacity-100');
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modalContent');
+        modalContent.classList.remove('scale-100', 'opacity-100');
+        modalContent.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 150);
+    }
+
+    document.getElementById('modal').addEventListener('click', closeModalOnClickOutside);
+    document.addEventListener('keydown', closeModalOnEsc);
+
+    function closeModalOnClickOutside(event) {
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modalContent');
+        if (!modal.contains(event.target) || !modalContent.contains(event.target)) {
+            closeModal();
+        }
+    }
+
+    function closeModalOnEsc(event) {
+        console.log(event.key)
+        if (event.key === "Escape") {
+            closeModal();
+        }
+    }
+</script>
