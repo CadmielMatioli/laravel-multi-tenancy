@@ -16,8 +16,12 @@ class CompanyController extends Controller {
     }
 
     public function store(CompanyStoreRequest $request){
-        $this->companyService->create($request);
-        return redirect()->route('choose-tenancy.index');
+        try{
+            $this->companyService->create($request);
+            return redirect()->route('choose-tenancy.index')->with('success', 'A empresa foi criada com sucesso.');
+        }catch (\Exception $e){
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     public function edit(Company $company){
@@ -26,6 +30,8 @@ class CompanyController extends Controller {
 
     public function update(CompanyUpdateRequest $request, Company $company){
         $this->companyService->update($request, $company);
+        session()->flash('warning', 'Este é um aviso de exemplo!');
+
         return redirect()->route('choose-tenancy.index');
     }
 

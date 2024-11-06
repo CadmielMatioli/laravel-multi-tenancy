@@ -1,7 +1,7 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <div class="px-4 py-4 sm:px-6 lg:px-8 justify-end flex">
         <div class="hidden sm:flex sm:items-center sm:ml-6">
-            @if(auth()->user()->companies()->count() > 1 && !request()->is('choose-tenancy*') || auth()->user()->is_admin)
+            @if(auth()->user()->is_admin)
                 <a href="{{ route('choose-tenancy.index') }}">
                     <x-primary-button>Escolher/Trocar empresa</x-primary-button>
                 </a>
@@ -18,6 +18,11 @@
                     </button>
                 </x-slot>
                 <x-slot name="content">
+                    @if(auth()->user()->companies()->count() > 1 && !request()->is('choose-tenancy*') || auth()->user()->is_admin)
+                        <x-dropdown-link :href="route('choose-tenancy.index')">
+                            Escolher/Trocar empresa
+                        </x-dropdown-link>
+                    @endif
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();this.closest('form').submit();">

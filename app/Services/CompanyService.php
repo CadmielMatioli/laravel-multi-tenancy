@@ -24,11 +24,19 @@ class CompanyService {
     }
 
     public function create($request){
-        $this->company->create([
+        $existingCompany = $this->company->withTrashed()->where('cnpj', $request->cnpj)->first();
+        if ($existingCompany && $existingCompany->trashed()) {
+            $existingCompany->restore();
+            $existingCompany->update($request->validated());
+            return true;
+        }
+
+        return $this->company->create([
             'name' => $request->name,
             'uuid' => (string) Str::uuid(),
             'cnpj' => $request->cnpj
         ]);
+
     }
 
     public function update($request, $company){
