@@ -1,6 +1,5 @@
 <x-app-layout>
-    @include('partials.sweet-alerts')
-    <div class="bg-white p-4 rounded-lg shadow-lg mx-auto text-gray-900">
+    <div class="bg-white p-4 rounded-lg shadow-lg text-gray-900">
         <h1 class="text-2xl font-bold mb-4">Lista de Empresas</h1>
         <form method="GET" action="{{ route('choose-tenancy.index') }}" class="grid grid-cols-12 gap-4 mb-4">
             <x-text-input class="col-span-12 md:col-span-3" type="text" name="nome" placeholder="Filtrar por nome" value="{{ request('nome') }}" />
@@ -41,7 +40,7 @@
                                     </a>
                                 @endcan
                                 @can('tenancy-delete')
-                                    <x-danger-button onclick="openModal('{{ route('companies.destroy', $company->uuid) }}', '{{ $company->cnpj }}')">Deletar</x-danger-button>
+                                    <x-danger-button onclick="openModalDelete('{{ route('companies.destroy', $company->uuid, 'delete-modal') }}', '{{ $company->cnpj }}')">Deletar</x-danger-button>
                                 @endcan
                             </div>
                         </td>
@@ -54,5 +53,14 @@
             {{ $companies->links() }}
         </div>
     </div>
-    <x-modal title="Confirmar Deleção" message="Você tem certeza que deseja remover a empresa" actionUrl="" name="" />
+    <ul class="px-10 py-4 bg-white rounded-lg shadow-lg mt-10">
+        <li class="text-red-900 font-semibold list-decimal text-3xl">
+            Registrar todas as permissões já antes que fique grande demais e acabe se perdendo.
+        </li>
+        <li class="text-red-700 font-semibold list-decimal text-2xl">
+            Criar crud de usuário
+        </li>
+    </ul>
+
+    <x-modal-delete title="Confirmar Deleção" message="Você tem certeza que deseja remover a empresa"/>
 </x-app-layout>

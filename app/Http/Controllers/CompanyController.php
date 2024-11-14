@@ -30,9 +30,7 @@ class CompanyController extends Controller {
 
     public function update(CompanyUpdateRequest $request, Company $company){
         $this->companyService->update($request, $company);
-        session()->flash('warning', 'Este é um aviso de exemplo!');
-
-        return redirect()->route('choose-tenancy.index');
+        return redirect()->route('choose-tenancy.index')->with('success', 'Empresa atualizada com sucesso!');
     }
 
     public function delete(Company $company){

@@ -1,1 +1,1 @@
-<img class="w-28 mt-16" src="{{asset('assets/imgs/smal-logo.png')}}" alt="">
+<img class="w-28" src="{{asset('assets/imgs/big-logo.png')}}" alt="big-logo">

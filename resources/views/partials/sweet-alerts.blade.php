@@ -2,11 +2,17 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             Swal.fire({
+                toast: true,
+                position: 'top-end',
                 icon: 'success',
-                title: 'Sucesso',
-                text: '{{ session('success') }}',
-                showConfirmButton: true,
-                timer: 3000
+                title: '{{ session('success')  ?? 'Sucesso!' }}',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
             });
         });
     </script>
@@ -19,8 +25,7 @@
                 toast: true,
                 position: 'top-end',
                 icon: 'warning',
-                title: 'Atenção!',
-                text: '{{ session('warning') }}',
+                title: '{{ session('warning')  ?? 'Atenção!' }}',
                 showConfirmButton: false,
                 timer: 3000,
                 timerProgressBar: true,
@@ -37,11 +42,17 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             Swal.fire({
-                icon: 'success',
-                title: 'Sucesso',
-                text: '{{ session('success') }}',
-                showConfirmButton: true,
-                timer: 3000
+                toast: true,
+                position: 'top-end',
+                icon: 'error',
+                title: '{{ session('error')  ?? 'Erro!' }}',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
             });
         });
     </script>
@@ -49,16 +60,21 @@
 
 @if(session('message'))
     <script>
-
-            document.addEventListener('DOMContentLoaded', function () {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Sucesso',
-                    text: '{{ session('success') }}',
-                    showConfirmButton: true,
-                    timer: 3000
-                });
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'message',
+                title: '{{ session('message')  ?? 'Mensagem!' }}',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
             });
-        </script>
+        });
+    </script>
 @endif
 

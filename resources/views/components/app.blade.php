@@ -8,22 +8,14 @@
         <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
         <link rel="preconnect" href="https://fonts.bunny.net">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link rel="stylesheet" href="{{asset('assets/fontAwesome/all.min.css')}}"/>
+        <script src="{{asset('assets/fontAwesome/all.min.js')}}"></script>
     </head>
     <body class="font-sans antialiased bg-gray-100">
-        <div class="min-h-screen">
-            @include('layout.sidebar')
-            <main class="home-section">
-                <div class="home-content">
-                    <i class='bx bx-menu'></i>
-                    @include('layout.navigation')
-                </div>
-                <div class="mt-8 px-4 sm:rounded-lg container mx-auto" id="app">
-                    <section>
-                        {{ $slot }}
-                    </section>
-                </div>
-            </main>
-        </div>
+        @include('partials.sweet-alerts')
+        <x-nav-bar></x-nav-bar>
+        <x-side-bar></x-side-bar>
+        <x-content>{{$slot}}</x-content>
         <script src="{{ asset('/assets/js/utils.js') }}"></script>
     </body>
 </html>
