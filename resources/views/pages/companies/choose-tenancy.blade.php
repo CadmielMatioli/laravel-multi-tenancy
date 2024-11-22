@@ -4,10 +4,10 @@
         <form method="GET" action="{{ route('choose-tenancy.index') }}" class="grid grid-cols-12 gap-4 mb-4">
             <x-text-input class="col-span-12 md:col-span-3" type="text" name="nome" placeholder="Filtrar por nome" value="{{ request('nome') }}" />
             <x-text-input class="col-span-12 md:col-span-3" type="text" name="cnpj" placeholder="Filtrar por CNPJ" value="{{ request('cnpj') }}" />
-            <x-primary-button class="col-span-6 md:col-span-1 max-w-28" type="submit">Filtrar</x-primary-button>
+            <x-primary-button class="col-span-6 md:col-span-2" type="submit">Filtrar</x-primary-button>
             @can('tenancy-create')
-                <a class="col-span-6 md:col-span-1 max-w-28" href="{{ route('companies.create') }}">
-                    <x-primary-button type="button">
+                <a class="col-span-6 md:col-span-1"  href="{{ route('companies.create') }}">
+                    <x-primary-button class="w-full md:w-auto" type="button">
                         Adicionar Empresa
                     </x-primary-button>
                 </a>

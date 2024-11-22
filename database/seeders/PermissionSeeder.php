@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Company;
+use App\Models\Category;
 use App\Models\Permission;
-use App\Models\Role;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -23,13 +21,28 @@ class PermissionSeeder extends Seeder
             ['name' => 'create-dashboard-item', 'description' => 'Create new items in the dashboard', 'uuid' => (string) Str::uuid(),],
         ];
 
-        Permission::upsert($permissions, ['name'], ['description', 'updated_at']);
+        $adminPermissions = [
+            ['name' => 'tenancy-create', 'description' => 'Create new items in the tenancy', 'uuid' => (string) Str::uuid(),],
+            ['name' => 'tenancy-update', 'description' => 'Update new items in the tenancy', 'uuid' => (string) Str::uuid(),],
+            ['name' => 'tenancy-delete', 'description' => 'Delete new items in the tenancy', 'uuid' => (string) Str::uuid(),],
+            ['name' => 'role-create', 'description' => 'Create new items in the roles', 'uuid' => (string) Str::uuid(),],
+            ['name' => 'role-update', 'description' => 'Update new items in the roles', 'uuid' => (string) Str::uuid(),],
+            ['name' => 'role-delete', 'description' => 'Delete new items in the roles', 'uuid' => (string) Str::uuid(),],
+            ['name' => 'role-view-row-company-name', 'description' => 'Role view row company name on row list', 'uuid' => (string) Str::uuid(),],
+        ];
 
-        $permissions = Permission::get();
-        $company = Company::first();
-        $companyRole = Role::create(['name' => 'admin', 'company_id' => $company->id, 'uuid' => (string) Str::uuid()]);
-        $companyRole->permissions()->attach($permissions);
-        $user = User::whereHas('companies')->first();
-        $user->userRolesCompany($company->id)->attach($companyRole);
+        $allPermissions = array_merge($permissions, $adminPermissions);
+
+        Permission::upsert($allPermissions, ['name'], ['description', 'updated_at']);
+
+        $categoryCompany = Category::where('name', 'company')->first();
+        collect($permissions)->pluck('name')->each(function ($permission) use ($categoryCompany) {
+            $categoryCompany->permissions()->attach(Permission::where('name', $permission)->first()->id);
+        });
+
+        $categorySystem = Category::where('name', 'system')->first();
+        collect($adminPermissions)->pluck('name')->each(function ($permission) use ($categorySystem) {
+            $categorySystem->permissions()->attach(Permission::where('name', $permission)->first()->id);
+        });
     }
 }

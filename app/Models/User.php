@@ -40,7 +40,7 @@ class User extends Authenticatable {
     }
 
     public function isMaster(): bool {
-        return $this->roles()->where('name', 'master')->exists();
+        return $this->roles()->where('name', 'Administrador Geral')->exists();
     }
 
     public function isSuperAdmin() {

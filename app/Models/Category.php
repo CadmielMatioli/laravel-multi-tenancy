@@ -15,7 +15,7 @@ class Category extends Model {
     ];
 
     public function permissions(): BelongsToMany {
-        return $this->belongsToMany(Permission::class, 'categories_permissions', 'category_id', 'permission_id');
+        return $this->belongsToMany(Permission::class);
     }
 
 }

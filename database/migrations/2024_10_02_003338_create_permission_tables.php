@@ -29,7 +29,7 @@ return new class extends Migration {
             $table->softDeletes();
         });
 
-        Schema::create('categories_permissions', function (Blueprint $table) {
+        Schema::create('category_permission', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->foreignId('permission_id')->constrained('permissions')->onDelete('cascade');
@@ -42,7 +42,7 @@ return new class extends Migration {
             $table->id();
             $table->uuid()->default(Str::uuid())->unique();
             $table->string('name');
-            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
+            $table->foreignId('company_id')->nullable()->constrained('companies')->onDelete('cascade');
             $table->boolean('status')->default(true);
             $table->timestamps();
             $table->softDeletes();

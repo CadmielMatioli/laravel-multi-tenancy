@@ -57,11 +57,11 @@ class UserSeeder extends Seeder {
             ]
         ], 'email');
 
-
         $user = User::where('email', 'funcionario1@empresa1.com')->first();
         $user->companies()->attach(1);
         $user = User::where('email', 'funcionario2@empresa1.com')->first();
         $user->companies()->attach(1);
+        $user->companies()->attach(2);
         $user = User::where('email', 'funcionario1@empresa2.com')->first();
         $user->companies()->attach(2);
 

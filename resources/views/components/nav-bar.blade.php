@@ -12,7 +12,7 @@
             </div>
             <div class="flex items-center">
                 <div class="flex items-center ms-3 gap-4">
-                    <div>
+                    <div class="hidden sm:block">
                         @if(auth()->user()->is_admin)
                             <a href="{{ route('choose-tenancy.index') }}">
                                 <x-primary-button>Escolher/Trocar empresa</x-primary-button>

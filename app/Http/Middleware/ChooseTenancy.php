@@ -14,9 +14,13 @@ class ChooseTenancy {
         $user = auth()->user();
 
         if($user->is_admin){
-            Gate::before(function($user, $ability) {
+            Gate::before(function($user) {
                 return $user->is_admin;
             });
+           return $next($request);
+        }
+
+        if($user->isMaster()){
            return $next($request);
         }
 
