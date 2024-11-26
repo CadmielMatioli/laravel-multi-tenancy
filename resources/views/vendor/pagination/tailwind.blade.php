@@ -34,7 +34,7 @@
             @endif
         </div>
 
-        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-stretch">
             <form action="{{ $paginationRoute }}" method="get" class="flex items-center">
                 <p class="text-sm text-gray-700 leading-5 mx-2">Linhas por página</p>
                 <select name="per_page" onchange="this.form.submit()" class="text-center text-black border border-gray-100 rounded-md shadow-sm focus:outline-none sm:text-sm">

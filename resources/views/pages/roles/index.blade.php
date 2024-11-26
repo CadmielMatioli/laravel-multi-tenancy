@@ -1,10 +1,10 @@
 <x-app-layout>
     <div class="bg-white p-4 rounded-lg shadow-lg text-gray-900">
         <h1 class="text-2xl font-bold mb-4">Lista de Cargos</h1>
-        <form method="GET" action="{{ route('choose-tenancy.index') }}" class="grid grid-cols-12 gap-4 mb-4">
-            <x-text-input class="col-span-12 md:col-span-3" type="text" name="nome" placeholder="Filtrar por nome" value="{{ request('nome') }}" />
+        <form method="GET" action="{{ route('roles.index') }}" class="grid grid-cols-12 gap-4 mb-4">
+            <x-text-input class="col-span-12 md:col-span-3" type="text" name="name" placeholder="Filtrar por nome" value="{{ request('name') }}" />
             <x-primary-button class="col-span-6 md:col-span-2" type="submit">Filtrar</x-primary-button>
-            @can('tenancy-create')
+            @can('role-create')
                 <a class="col-span-6 md:col-span-1"  href="{{ route('roles.create') }}">
                     <x-primary-button class="w-full md:w-auto" type="button">
                         Adicionar Cargo
@@ -33,12 +33,12 @@
                         <td class="">
                             <div class="flex items-center justify-center space-x-2">
                                 @can('role-update')
-                                    <a href="{{ route('roles.edit', $role) }}" class="text-blue-600 hover:text-blue-900">
+                                    <a href="{{ route('roles.edit', $role->uuid) }}" class="text-blue-600 hover:text-blue-900">
                                         <x-primary-button type="button">Editar</x-primary-button>
                                     </a>
                                 @endcan
                                 @can('role-delete')
-                                    <x-danger-button onclick="openModalDelete('{{ route('companies.destroy', $role->uuid, 'delete-modal') }}', '{{ $role->cnpj }}')">Deletar</x-danger-button>
+                                    <x-danger-button onclick="openModalDelete('{{ route('roles.destroy', $role->uuid, 'delete-modal') }}', '{{ $role->name }}')">Deletar</x-danger-button>
                                 @endcan
                             </div>
                         </td>
@@ -51,5 +51,5 @@
             {{ $roles->links() }}
         </div>
     </div>
-    <x-modal-delete title="Confirmar Deleção" message="Você tem certeza que deseja remover a empresa"/>
+    <x-modal-delete title="Confirmar remoção" message="Você tem certeza que deseja remover o cargo"/>
 </x-app-layout>

@@ -7,44 +7,43 @@ use Illuminate\Support\Str;
 
 class RoleService {
 
-    public function __construct(private readonly Role $role) {}
+    public function __construct(private readonly Role $role, private readonly PermissionService $permissionService, private readonly CompanyService $companyService) {}
 
     public function getByUuid($uuid = null){
-        return $this->role->where('uuid', $uuid ?? request()->uuid)->first();
+        return $this->role->where('uuid', $uuid ?? request()->uuid)->firstOrFail();
     }
 
     public function get(){
-        $roles = $this->role;
+        $roles = $this->role->when(request()->name, fn($query) => $query->where('name', 'like', '%' . request()->name . '%'));
         if (auth()->user()->isSuperAdmin() || auth()->user()->isMaster()) {
-            $roles = $this->role->with('permissions');
+            $roles = $roles->with('permissions');
         }
         if(session()->has('company_uuid')){
-            $roles = $this->role->where('company_id', session()->get('company_id'))->with('permissions');
+            $roles = $roles->where('company_id', auth()->user()->currentCompany()->id)->with('permissions');
         }
         return $roles->paginate(config('pagination.per_page'));
     }
 
-    public function create($request){
-        $existingCompany = $this->role->withTrashed()->where('cnpj', $request->cnpj)->first();
-        if ($existingCompany && $existingCompany->trashed()) {
-            $existingCompany->restore();
-            $existingCompany->update($request->validated());
-            return true;
-        }
-
-        return $this->role->create([
-            'name' => $request->name,
-            'uuid' => (string) Str::uuid(),
-            'cnpj' => $request->cnpj
+    public function create(): void {
+        $role = $this->role->create([
+            'name' => request()->name,
+            'company_id' => $this->companyService->getByUuid(session()->get('company_uuid'))->id
         ]);
-
+        $permissions = collect(request()->permissions)->map(fn($permission) => $this->permissionService->getByUuid($permission)->id);
+        $role->permissions()->attach($permissions);
     }
 
-    public function update($request, $company){
-        $company->update([
-            'name' => $request->name,
-            'uuid' => (string) Str::uuid(),
-            'cnpj' => $request->cnpj
+    public function update($role): void {
+        $role = $this->getByUuid($role);
+        $role->update([
+            'name' => request()->name,
+            'company_id' => $this->companyService->getByUuid(session()->get('company_uuid'))->id,
         ]);
+        $permissions = collect(request()->permissions)->map(fn($permissionUuid) => $this->permissionService->getByUuid($permissionUuid)->id);
+        $role->permissions()->sync($permissions);
+    }
+
+    public function delete($role){
+        $this->getbyUuid($role)->delete();
     }
 }

@@ -7,7 +7,7 @@
                 </button>
                 <a href="{{ route('dashboard') }}" class="flex ms-2 md:me-24">
                     <img src="{{ asset('assets/imgs/small-logo.png') }}" class="h-8 me-3" alt="small-logo" />
-                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">FluxControl</span>
+                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">{{ auth()->user()->currentCompany()->name ?? 'Gestão' }}</span>
                 </a>
             </div>
             <div class="flex items-center">

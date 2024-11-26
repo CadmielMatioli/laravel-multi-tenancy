@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Role extends Model {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'status', 'company_id'];
+    protected $fillable = ['name', 'status', 'uuid', 'company_id'];
+
+    protected $hidden = ['company_id'];
 
     public function permissions(): BelongsToMany {
         return $this->belongsToMany(Permission::class);

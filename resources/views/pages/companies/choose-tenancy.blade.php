@@ -2,7 +2,7 @@
     <div class="bg-white p-4 rounded-lg shadow-lg text-gray-900">
         <h1 class="text-2xl font-bold mb-4">Lista de Empresas</h1>
         <form method="GET" action="{{ route('choose-tenancy.index') }}" class="grid grid-cols-12 gap-4 mb-4">
-            <x-text-input class="col-span-12 md:col-span-3" type="text" name="nome" placeholder="Filtrar por nome" value="{{ request('nome') }}" />
+            <x-text-input class="col-span-12 md:col-span-3" type="text" name="name" placeholder="Filtrar por nome" value="{{ request('nome') }}" />
             <x-text-input class="col-span-12 md:col-span-3" type="text" name="cnpj" placeholder="Filtrar por CNPJ" value="{{ request('cnpj') }}" />
             <x-primary-button class="col-span-6 md:col-span-2" type="submit">Filtrar</x-primary-button>
             @can('tenancy-create')

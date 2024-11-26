@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\CompanyService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -81,5 +82,8 @@ class User extends Authenticatable {
         return $permissions;
     }
 
-
+    public function currentCompany(){
+        $companyService = app()->make(CompanyService::class);
+        return $companyService->getCurrentCompany();
+    }
 }

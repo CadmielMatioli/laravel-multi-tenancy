@@ -12,14 +12,19 @@ class CompanyService {
     public function getByUuid($uuid = null){
         return $this->company->where('uuid', $uuid ?? request()->company_uuid)->first();
     }
+
+    public function getCurrentCompany(){
+        return $this->company->where('uuid', session()->get('company_uuid'))->first();
+    }
+
     public function get(){
         $companies = auth()->user()->companies();
         if(auth()->user()->is_admin) {
             $companies = $this->company;
         }
         return $companies
-            ->when(request()->filled('nome'), fn($query) => $query->where('name', 'like', '%' . request()->input('nome') . '%'))
-            ->when(request()->filled('cnpj'), fn($query) => $query->where('cnpj', 'like', '%' . request()->input('cnpj') . '%'))
+            ->when(request()->name, fn($query) => $query->where('name', 'like', '%' . request()->name . '%'))
+            ->when(request()->cnpj, fn($query) => $query->where('cnpj', 'like', '%' . request()->cnpj . '%'))
             ->paginate(config('pagination.per_page'));
     }
 
