@@ -36,12 +36,12 @@ class RoleController extends Controller {
     }
 
     public function update($role){
-//        try {
+        try {
             $this->roleService->update($role);
             return redirect()->route('roles.index')->with('success', __('messages.success.update'));
-//        }catch (Exception $e){
-//            return redirect()->route('roles.index')->with('error', __('messages.error.update'));
-//        }
+        }catch (Exception $e){
+            return redirect()->route('roles.index')->with('error', __('messages.error.update'));
+        }
     }
 
     public function destroy($role){
