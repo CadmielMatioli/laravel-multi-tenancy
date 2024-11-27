@@ -11,7 +11,7 @@
                 <li>
                     <a href="{{ route('roles.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 group">
                         <i class="fa-solid fa-user-shield text-gray-600 text-xl"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Roles</span>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Cargos</span>
                     </a>
                 </li>
             @endcan
@@ -23,6 +23,16 @@
                     </a>
                 </li>
             @endcan
+
+            @can('user-profile')
+                <li>
+                    <a href="{{ route('users.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 group">
+                        <i class="fa-solid fa-user-gear text-gray-600 text-xl"></i>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Perfil</span>
+                    </a>
+                </li>
+            @endcan
+
 {{--            <li>--}}
 {{--                <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">--}}
 {{--                    <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">--}}

@@ -16,13 +16,14 @@
             </div>
             <div class="mb-4">
                 <x-input-label for="password"  :value="__('password:')"/>
-                <x-text-input type="password" name="password" id="password" value="{{ old('password') ?? $user->password }}" required/>
+                <x-text-input type="password" name="password" id="password" value="{{ old('password') }}" required/>
                 <x-input-error class="mt-2" :messages="$errors->get('name')" />
             </div>
-            <div class="flex justify-end">
-                <x-primary-button type="submit">
-                    Salvar
-                </x-primary-button>
+            <div class="flex justify-between">
+                <a href="{{ route('users.index') }}">
+                    <x-primary-button type="button">voltar</x-primary-button>
+                </a>
+                <x-primary-button type="submit">Salvar</x-primary-button>
             </div>
         </form>
     </div>

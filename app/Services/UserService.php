@@ -13,16 +13,23 @@ class UserService {
     }
 
     public function get(){
-        $users = $this->user->when(request()->name, fn($query) => $query->where('name', 'like', '%' . request()->name . '%'));
+        $users = $this->user
+            ->where('id', '!=', auth()->user()->id)
+            ->whereHas('companies', fn($query) => $query->when(auth()->user()->currentCompany(), fn($query) => $query->where('company_id', auth()->user()->currentCompany()->id)))
+            ->when(request()->name, fn($query) => $query->where('name', 'like', '%' . request()->name . '%'));
         return $users->paginate(config('pagination.per_page'));
     }
 
     public function create() {
-        return $this->user->create([
+       $data = [
             'name' => request()->name,
             'email' => request()->email,
-            'password' => request()->password,
-        ]);
+        ];
+        if (request()->password) {
+            $data['password'] = bcrypt(request()->password);
+        }
+
+        return $this->user->create($data);
     }
 
     public function update($user): void {

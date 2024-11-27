@@ -51,10 +51,11 @@
                 {{ $permissions->links() }}
             </div>
 
-            <div class="flex justify-end">
-                <x-primary-button type="submit">
-                    Salvar
-                </x-primary-button>
+            <div class="flex justify-between">
+                <a href="{{ route('roles.index') }}">
+                    <x-primary-button type="button">voltar</x-primary-button>
+                </a>
+                <x-primary-button type="submit">Salvar</x-primary-button>
             </div>
         </form>
     </div>

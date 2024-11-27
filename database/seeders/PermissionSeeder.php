@@ -31,6 +31,7 @@ class PermissionSeeder extends Seeder
             ['name' => 'role-create', 'description' => 'Permite criar novos cargos', 'uuid' => (string) Str::uuid()],
             ['name' => 'role-update', 'description' => 'Permite atualizar cargos', 'uuid' => (string) Str::uuid()],
             ['name' => 'role-delete', 'description' => 'Permite excluir cargos', 'uuid' => (string) Str::uuid()],
+            ['name' => 'user-profile', 'description' => 'Permite ver listagem de usuários', 'uuid' => (string) Str::uuid()],
             ['name' => 'user-view', 'description' => 'Permite ver listagem de usuários', 'uuid' => (string) Str::uuid()],
             ['name' => 'user-create', 'description' => 'Permite criar usuários', 'uuid' => (string) Str::uuid()],
             ['name' => 'user-update', 'description' => 'Permite atualizar usuários', 'uuid' => (string) Str::uuid()],
