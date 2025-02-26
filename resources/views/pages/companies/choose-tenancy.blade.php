@@ -53,12 +53,40 @@
             {{ $companies->links() }}
         </div>
     </div>
-    <ul class="px-10 py-4 bg-white rounded-lg shadow-lg mt-10">
-        <li class="text-red-900 font-semibold list-decimal text-3xl">
-            Registrar todas as permissões já antes que fique grande demais e acabe se perdendo.
+    <h2 class="text-orange-800 font-bold text-2xl mt-10 mb-4">Sequencia do site</h2>
+    <ul class="px-10 py-4 bg-white rounded-lg shadow-lg">
+        <li class="text-red-700 font-semibold list-decimal text-2xl">
+            Melhorar crud de usuários (implementar sistema de selecionar roles, testar todos os tipos de usuários e cadastro de roles e controle por roles)
         </li>
         <li class="text-red-700 font-semibold list-decimal text-2xl">
-            Criar crud de usuário
+            Revisar completamente o sistema de roles
+        </li>
+        <li class="text-red-700 font-semibold list-decimal text-2xl">
+            Revisar e melhorar sistema de escolher empresa
+        </li>
+        <li class="text-red-700 font-semibold list-decimal text-2xl">
+            Criar Revisar e melhorar o sistema de perfil dos usuários
+        </li>
+        <li class="text-red-700 font-semibold list-decimal text-2xl">
+            Sistema para a area administrativa resetar tenancy selecionados
+        </li>
+    </ul>
+
+    <h2></h2>
+    <h2 class="text-orange-800 font-bold text-2xl mt-10 mb-4">BackLog</h2>
+
+    <ul class="px-10 py-4 bg-white rounded-lg shadow-lg">
+        <li class="text-red-700 font-semibold list-decimal text-2xl">
+            Analisar como seria possível fazer o sistema para deixar offline e online
+        </li>
+        <li class="text-red-700 font-semibold list-decimal text-2xl">
+            Sistema de simples de homepage
+        </li>
+        <li class="text-red-700 font-semibold list-decimal text-2xl">
+            Sistema de simples planos casado com permissões
+        </li>
+        <li class="text-red-700 font-semibold list-decimal text-2xl">
+            Pensar num jeito de "comprar" permissões
         </li>
     </ul>
 
