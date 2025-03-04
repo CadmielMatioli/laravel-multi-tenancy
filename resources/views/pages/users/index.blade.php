@@ -17,6 +17,7 @@
                 <thead>
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Nome</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Roles</th>
                         <th class="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider">Configurações</th>
                     </tr>
                 </thead>
@@ -24,6 +25,7 @@
                 @foreach ($users as $user)
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-900">{{ $user->name }}</td>
+                        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-900">{{ $user->roles->pluck('name')->implode(', ') }}</td>
                         <td class="">
                             <div class="flex items-center justify-center space-x-2">
                                 @can('user-update')

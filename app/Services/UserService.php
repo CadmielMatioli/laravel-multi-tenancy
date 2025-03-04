@@ -6,7 +6,7 @@ use App\Models\User;
 
 class UserService {
 
-    public function __construct(private readonly User $user) {}
+    public function __construct(private readonly User $user, private readonly RoleService $roleService) {}
 
     public function getByUuid($uuid = null){
         return $this->user->where('uuid', $uuid ?? request()->uuid)->firstOrFail();
@@ -34,11 +34,29 @@ class UserService {
 
     public function update($user): void {
         $user = $this->getByUuid($user);
-        $user->update([
+        $item = [
             'name' => request()->name,
             'email' => request()->email,
-            'password' => request()->password,
-        ]);
+        ];
+        if(request()->has('password')){
+            $item['password'] = bcrypt(request()->password);
+        }
+
+        if(request()->has('is_admin')){
+            $item['is_admin'] = request()->is_admin;
+            $user->roles()->detach();
+        }else{
+            if($user->is_admin){
+                $item['is_admin'] = false;
+            }
+        }
+
+        $user->update($item);
+
+        if (request()->has('roles')) {
+            $roles = collect(request()->roles)->map(fn($roleUuid) => $this->roleService->getByUuid($roleUuid)->id);
+            $user->roles()->sync($roles);
+        }
     }
 
     public function delete($user){

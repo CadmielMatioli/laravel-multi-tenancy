@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 
+use App\Services\RoleService;
 use App\Services\UserService;
 use Exception;
 
 class UserController extends Controller {
-    public function __construct(private readonly UserService $userService){}
+    public function __construct(private readonly UserService $userService, private readonly RoleService $roleService){}
 
     public function index(){
         $users = $this->userService->get();
@@ -29,7 +30,8 @@ class UserController extends Controller {
 
     public function edit($user){
         $user = $this->userService->getByUuid($user);
-        return view('pages.users.edit', compact('user'));
+        $roles = $this->roleService->get();
+        return view('pages.users.edit', compact('user', 'roles'));
     }
 
     public function update($user){
