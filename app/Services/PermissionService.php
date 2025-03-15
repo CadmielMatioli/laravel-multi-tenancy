@@ -3,11 +3,14 @@
 namespace App\Services;
 
 use App\Models\Permission;
-use Illuminate\Support\Str;
 
 class PermissionService {
 
-    public function __construct(private readonly Permission $permission) {}
+    private readonly Permission $permission;
+
+    public function __construct() {
+        $this->permission = new Permission();
+    }
 
     public function getByUuid($uuid = null){
         return $this->permission->where('uuid', $uuid ?? request()->uuid)->first();

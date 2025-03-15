@@ -7,7 +7,10 @@ use Illuminate\Support\Str;
 
 class CompanyService {
 
-    public function __construct(private readonly Company $company) {}
+    private readonly Company $company;
+    public function __construct() {
+        $this->company = new Company();
+    }
 
     public function getByUuid($uuid = null){
         return $this->company->where('uuid', $uuid ?? request()->company_uuid)->first();

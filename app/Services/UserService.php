@@ -9,7 +9,7 @@ class UserService {
     public function __construct(private readonly User $user, private readonly RoleService $roleService) {}
 
     public function getByUuid($uuid = null){
-        return $this->user->where('uuid', $uuid ?? request()->uuid)->firstOrFail();
+        return $this->user->with("companies")->where('uuid', $uuid ?? request()->uuid)->firstOrFail();
     }
 
     public function get(){
@@ -33,6 +33,7 @@ class UserService {
     }
 
     public function update($user): void {
+//        dd(request()->all());
         $user = $this->getByUuid($user);
         $item = [
             'name' => request()->name,

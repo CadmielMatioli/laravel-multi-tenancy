@@ -30,12 +30,13 @@ class UserController extends Controller {
 
     public function edit($user){
         $user = $this->userService->getByUuid($user);
-        $roles = $this->roleService->get();
+        $roles = $this->roleService->getUserUpdate($user);
         return view('pages.users.edit', compact('user', 'roles'));
     }
 
     public function update($user){
         try {
+//            dd(request()->all());
             $this->userService->update($user);
             return redirect()->route('users.index')->with('success', __('messages.success.update'));
         }catch (Exception $e){

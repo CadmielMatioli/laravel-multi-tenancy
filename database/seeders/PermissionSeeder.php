@@ -24,6 +24,8 @@ class PermissionSeeder extends Seeder
             ['name' => 'tenancy-update', 'description' => 'Permite atualizar dados das empresas', 'uuid' => (string) Str::uuid()],
             ['name' => 'tenancy-delete', 'description' => 'Permite excluir empresa', 'uuid' => (string) Str::uuid()],
             ['name' => 'role-view-row-company-name', 'description' => 'Permite visualizar coluna com o nome da empresa na listagem de cargos', 'uuid' => (string) Str::uuid()],
+            ['name' => 'user-update-password', 'description' => 'Permite editar a senha dos usuários', 'uuid' => (string) Str::uuid()],
+            ['name' => 'user-update-master-role', 'description' => 'Permite transformar o usuário em um administrador geral', 'uuid' => (string) Str::uuid()],
         ];
 
         $boothPermissions = [

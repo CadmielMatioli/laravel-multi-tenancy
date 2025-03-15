@@ -45,7 +45,7 @@ class User extends Authenticatable {
     }
 
     public function isSuperAdmin() {
-        return auth()->user()->in_admin;
+        return auth()->user()->is_admin;
     }
 
     public function userRolesCompany($companyId): BelongsToMany {

@@ -18,6 +18,7 @@
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Nome</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Roles</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Empresa</th>
                         <th class="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider">Configurações</th>
                     </tr>
                 </thead>
@@ -26,6 +27,7 @@
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-900">{{ $user->name }}</td>
                         <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-900">{{ $user->roles->pluck('name')->implode(', ') }}</td>
+                        <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-900">{{ $user->companies?->pluck('name')->implode(', ') }}</td>
                         <td class="">
                             <div class="flex items-center justify-center space-x-2">
                                 @can('user-update')
@@ -47,5 +49,23 @@
             {{ $users->links() }}
         </div>
     </div>
+    <h2 class="text-orange-800 font-bold text-2xl mt-10 mb-4">Sequencia de usuarios</h2>
+    <ul class="px-10 py-4 bg-white rounded-lg shadow-lg">
+        <li class="text-red-700 font-semibold list-decimal text-2xl">
+            Esta salvando o usuario sem role
+        </li>
+        <li class="text-red-700 font-semibold list-decimal text-2xl">
+            testar mais cenarios na pate de editar senha, implementar alguma forma de controlar as empresas do usuario, adicionar ou remover empresa do usuario
+        </li>
+        <li class="text-red-700 font-semibold list-decimal text-2xl">
+            Na tela de editar usuario adicionar opcao de selecionar empresa para o escopo administrador geral
+        </li>
+        <li class="text-red-700 font-semibold list-decimal text-2xl">
+            Na tela de editar permitir editar senha apenas para administrador geral
+        </li>
+        <li class="text-red-700 font-semibold list-decimal text-2xl">
+            Na tela de editar melhorar layout e sistema de troca de roles como trocar de pagina e filtros
+        </li>
+    </ul>
     <x-modal-delete title="Confirmar remoção" message="Você tem certeza que deseja remover o usuário"/>
 </x-app-layout>

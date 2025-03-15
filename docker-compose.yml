@@ -14,12 +14,13 @@ services:
         volumes:
             - .:/app
         networks:
-            - lavapplication
+            - postgree_postgres-network
         environment:
             - APP_ENV=${APP_ENV}
             - APP_PORT=${APP_PORT}
             - APP_VITE_PORT=${APP_VITE_PORT}
 
+
 networks:
-    lavapplication:
-        driver: bridge
+    postgree_postgres-network:
+        external: true
